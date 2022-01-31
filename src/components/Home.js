@@ -52,7 +52,6 @@ useEffect(()=>{
                 <div className ="card gap" key={e.id} > 
                <h2 className="card-header">{e.Name}</h2>
                <br/>
-               <p id = "impId">{e.id}</p>
                <p className="card-text">{e.Description}</p>
                <div className="card-body">
                  <h5 className="card-title">Month: {e.Month}</h5>
