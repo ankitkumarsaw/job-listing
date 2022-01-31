@@ -1,13 +1,17 @@
 import list from './list.json';
 import "./Home.css"
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 
 export default function Home() {
   const [homi, sethomi] = useState()
   const [display, setdisplay] = useState({
     display: "none"
   })
+  
+
+  
   const openModal = () => {
+
 setdisplay({
   display: "flex"
 })
@@ -23,59 +27,48 @@ const closeModal = () => {
     display: "flex"
   })
   }
-
- 
-  const [text, settext] = useState(list.map((e) => {
-    return(
-      <div className ="card gap" key={e.id}> 
-     <h2 className="card-header">{e.Name}</h2>
-     <br/>
-     <p className="card-text">{e.Description}</p>
-     <div className="card-body">
-       <h5 className="card-title">Month: {e.Month}</h5>
-       <h5 className="card-title">Salary: {e.Salary} INR</h5>
-       <button type="button" className="btn btn-primary" onClick={openModal} id={e.id}>
-   Know more
- </button>
-     </div>
-     </div>
     
-    )
-  }));
-    
+const [searchText, setSearchText] = useState("")
+const addText = ((event)=>{
+    setSearchText(event.target.value)
+}
+)
 
-//  const handleFilter = (e) => {
-//   const searchWord = e.target.value;
-//   const newFilter = list.map((e)=>{
-//     return(
-//       e.id.includes(searchWord)
-//     )
-//   })
-//   console.log(newFilter)
 
-// //  let detailSearch = list.map((e) => {
+const [text, settext] = useState("")
+useEffect(()=>{
+  const details = list.filter((value)=>{
+    if(searchText == ""){
+    return value;
     
-// //       return(
-// //         <div className ="card gap" key={e.id}> 
-// //       <h2 className="card-header">{e.Name}</h2>
-// //      <br/>
-// //      <p className="card-text">{e.Description}</p>
-// //      <div className="card-body">
-// //        <h5 className="card-title">Month: {e.Month}</h5>
-// //        <h5 className="card-title">Salary: {e.Salary} INR</h5>
-// //        <button type="button" className="btn btn-primary" onClick={openModal} id={e.id}>
-// //    Know more
-// //  </button>
-// //      </div>
-// //      </div>
+    }else if(value.Name.toLowerCase().includes(searchText.toLowerCase)){
       
-// //       )
-//     // })
-//     // settext(detailSearch);
-//  }
+      return value;
+    }
+      }).map((e)=>{
+        
+        return(
+          <>
+                <div className ="card gap" key={e.id} > 
+               <h2 className="card-header">{e.Name}</h2>
+               <br/>
+               <p id = "impId">{e.id}</p>
+               <p className="card-text">{e.Description}</p>
+               <div className="card-body">
+                 <h5 className="card-title">Month: {e.Month}</h5>
+                 <h5 className="card-title">Salary: {e.Salary} INR</h5>
+                 <button type="button" className="btn btn-primary" onClick={openModal}>
+             Know more
+           </button>
+               </div>
+               </div>
+               </>
+        )
+      })
+      
+      settext(details)
 
-  
-
+},[searchText])
 
 
 
@@ -95,7 +88,8 @@ const closeModal = () => {
   Know more
 </button>
           </div>
-          </div>)
+          </div>
+          )
           
         }else{}
             })
@@ -245,7 +239,7 @@ const closeModal = () => {
           </ul>
  </div>
  <form className="d-flex">
-        {/* <input className="form-control me-2" onChange={handleFilter} id = "myInput" type="search" placeholder="Search" aria-label="Search"/> */}
+        <input className="form-control me-2" onChange={addText} id = "myInput" type="search" placeholder="Search" aria-label="Search"/>
       </form>
         </div>
       <section>
@@ -264,7 +258,7 @@ const closeModal = () => {
   <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
 </div>
 <div className="modal-body">
-  Modal body..
+  {/* <p>{paragraph}</p> */}
 </div>
 <div className="modal-footer">
   <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={closeModal}>Close</button>
