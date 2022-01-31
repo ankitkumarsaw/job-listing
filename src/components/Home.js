@@ -41,7 +41,7 @@ useEffect(()=>{
     if(searchText == ""){
     return value;
     
-    }else if(value.Name.toLowerCase().includes(searchText.toLowerCase)){
+    }else if(value.Name.toLowerCase().includes(searchText.toLowerCase())){
       
       return value;
     }
